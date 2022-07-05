@@ -1,0 +1,18 @@
+Kind: horizontalpod autoscaler # object type, referred to as HPA, horizontal auto scaling
+Apiversion: autoscaling/v1 # the API of autoscaling / v2beta2 is very different from that of autoscaling / v1. Pay attention to the difference between them
+metadata:
+  name: php-fpm-nginx
+spec:
+  Scaletargetref: # scalable target object
+    Apiversion: apps / V1 # object version
+    Kind: deployment # the type of the target object
+    Name: PHP FPM nginx # the name of the target object
+  Minreplicas: 3 # minimum number of copies
+  Maxreplicas: 10 # maximum copies
+  Metrics: # indicators
+    -Type: resource ා type: Resource
+      resource:
+        Name: memory
+        target:
+          Type: utilization
+          Average utilization: 1 # 1% this value is for experiment. Please refer to the actual situation of the business party for the specific value
