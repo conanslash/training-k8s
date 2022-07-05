@@ -2,8 +2,11 @@
 
 ## Training Material
 
-> https://drive.google.com/drive/folders/1-bEpCQYIyCh1s7SoikcRreGhy4TT3Pwb?usp=sharing
+> https://drive.google.com/drive/folders/1UFCw1yTdHnTSCe3_F1GHTDWzJkR50sGp?usp=sharing
 
-## K8S Cheatsheet
 
-> https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+### Link Reference
+ 1. Kubernetes Dashboard:  https://github.com/kubernetes/dashboard
+ 2. Kubernetes Cheatsheet: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
