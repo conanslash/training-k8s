@@ -1,4 +1,4 @@
-# Install Metallb in Kubernetst Cluster
+# Install MetalLB in Kubernetst Cluster
 
 - Install Helm
 	```bash
@@ -16,11 +16,11 @@
 - Basic Config for values.yaml
 	```yaml
 	configInline:
-	address-pools:
-	- name: default
-	protocol: layer2
-	addresses:
-	- 10.0.2.100-10.0.2.150
+		address-pools:
+		- name: default
+			protocol: layer2
+			addresses:
+			- 10.0.2.100-10.0.2.150
 	```
 
 - apply basic configgfile for metallb
@@ -62,34 +62,34 @@
 	apiVersion: v1
 	kind: Service
 	metadata:
-	name: nginx
-	annotations:
+		name: nginx
+		annotations:
 	spec:
-	ports:
-	- port: 80
-	targetPort: 80
-	selector:
-	app: nginx
-	type: LoadBalancer
+		ports:
+		- port: 80
+			targetPort: 80
+		selector:
+			app: nginx
+		type: LoadBalancer
 	---
 	apiVersion: apps/v1
 	kind: Deployment
 	metadata:
-	name: nginx-deployment
+		name: nginx-deployment
 	spec:
-	selector:
-	matchLabels:
-	app: nginx
-	replicas: 1
-	template:
-	metadata:
-	labels:
-	app: nginx
-	spec:
-	containers:
-	- name: nginx
-	image: nginx:1.14.2
-	ports:
-	- containerPort: 80
+		selector:
+			matchLabels:
+				app: nginx
+		replicas: 1
+		template:
+			metadata:
+				labels:
+					app: nginx
+		spec:
+			containers:
+				- name: nginx
+					image: nginx:1.14.2
+					ports:
+					- containerPort: 80
 
 	```
