@@ -1,37 +1,32 @@
 # Install Metallb in Kubernetst Cluster
 
 - Install Helm
-
-```bash
-$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-$ chmod 700 get_helm.sh
-$ ./get_helm.sh
-```
+	```bash
+	$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+	$ chmod 700 get_helm.sh
+	$ ./get_helm.sh
+	```
 
 - Install Metallb using Helm
-
-```bash
-$ helm repo add metallb https://metallb.github.io/metallb
-$ helm repo update
-```
+	```bash
+	$ helm repo add metallb https://metallb.github.io/metallb
+	$ helm repo update
+	```
 
 - Basic Config for values.yaml
-
-```yaml
-configInline:
-address-pools:
-- name: default
-protocol: layer2
-addresses:
-- 10.0.2.100-10.0.2.150
-```
+	```yaml
+	configInline:
+	address-pools:
+	- name: default
+	protocol: layer2
+	addresses:
+	- 10.0.2.100-10.0.2.150
+	```
 
 - apply basic configgfile for metallb
-
-      	```bash
-      	$ helm install metallb metallb/metallb -f values.yaml
-
-      	```
+	```bash
+	$ helm install metallb metallb/metallb -f values.yaml
+	```
 
 - Verify confgmap for metallb
 
