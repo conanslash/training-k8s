@@ -16,11 +16,11 @@
 - Basic Config for values.yaml
 	```yaml
 	configInline:
-		address-pools:
-		- name: default
-			protocol: layer2
-			addresses:
-			- 10.0.2.100-10.0.2.150
+	 address-pools:
+	 - name: default
+	   protocol: layer2
+	   addresses:
+	    - 10.0.2.100-10.0.2.150
 	```
 
 - apply basic configgfile for metallb
