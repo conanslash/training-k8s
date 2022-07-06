@@ -36,7 +36,7 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 OR
 
 ```shell
-kubectl -n kubernetes-dashboard create token k8s-admin
+kubectl -n kube-system create token k8s-admin
 
 ```
 
