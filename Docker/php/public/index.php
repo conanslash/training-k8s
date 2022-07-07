@@ -1,11 +1,11 @@
 <html>
 
 <head>
-	<title>PHP Hello World!</title>
+	<title> Welcome to K8s</title>
 </head>
 
-<body>
-	<?php echo '<h1>Hello World</h1>'; ?>
+<body style="text-align:center">
+	<?php echo '<h1>Hello World , Suhalil test</h1>'; ?>
 	<?php echo php_uname('n') ?>
 	<?php phpinfo(); ?>
 </body>

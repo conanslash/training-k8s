@@ -14,8 +14,8 @@ spec: # deployment object specification
     spec: # pod object specification
       containers: # here are two containers
         - name: php # first container name
-          image: k8s_php
-          imagePullPolicy: Never
+          image: conanslash/k8s_php:v1.2
+          imagePullPolicy: Always
           ports:
             - containerPort: 9000 # PHP FPM port
           volumeMounts: # mount data volume
@@ -27,8 +27,8 @@ spec: # deployment object specification
                 command: ['/bin/sh', '-c', 'cp -r /app/. /var/www/slim_app']
  # / APP/ index.php  Copy to mounted volume
         - name: nginx # second container name
-          image: k8s_nginx
-          imagePullPolicy: Never # container image
+          image: conanslash/k8s_nginx:v1.0
+          imagePullPolicy: Always # container image
           ports:
             - containerPort: 80 # nginx port
           volumeMounts:  # nginx container mounts two volumes, one shared with the PHP FPM container, and the other configured nginx.conf  Volume of
@@ -37,12 +37,17 @@ spec: # deployment object specification
             - mountPath: /etc/nginx/nginx.conf  #Mount configuration nginx.conf  Volume of
               subPath: nginx.conf
               name: nginx-config
+            - mountPath: /var/www/slim_app/data # mount the volume shared by two containers
+              name: vol1
       volumes:
         - name: nginx-www # this volume is shared by PHP FPM container and nginx container, both of which are volumemounts
           emptyDir: {}
         - name: nginx-config
           configMap: #some people wonder why configmap objects can be injected into containers through volumemounts, because configmap is a special kind of volume in essence
             name: nginx-config
+        - name: vol1
+          persistentVolumeClaim:
+            name: webupload1-pvc
 ---
 apiVersion: v1 # API version
 kind: Service # object type
