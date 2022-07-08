@@ -1,0 +1,73 @@
+apiVersion: apps/v1 # API version
+kind: Deployment # object type
+metadata:
+  name: php-fpm-nginx-dp # deployment object name
+spec: # deployment object specification
+  selector: # selector
+    matchLabels: # label matching
+      app: php-fpm-nginx
+  replicas: 1 # number of copies
+  template:
+    metadata: # metadata of pod object
+      labels: # label of pod object
+        app: php-fpm-nginx
+    spec: # pod object specification
+      containers: # here are two containers
+        - name: php # first container name
+          image: conanslash/k8s_php:v1.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9000 # PHP FPM port
+          volumeMounts: # mount data volume
+            - mountPath: /var/www/slim_app # mount the volume shared by two containers
+              name: nginx-www
+            - name: vol1
+              mountPath: /var/www/slim_app/data
+            - name: vol2
+              mountPath: /var/www/slim_app/data2
+          lifecycle:
+            postStart: # when the container is in the post start phase, execute the following command
+              exec:
+                command: ['/bin/sh', '-c', 'cp -r /app/. /var/www/slim_app']
+        # / APP/ index.php  Copy to mounted volume
+        - name: nginx # second container name
+          image: conanslash/k8s_nginx:v1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80 # nginx port
+          volumeMounts: # nginx container mounts two volumes, one shared with the PHP FPM container, and the other configured nginx.conf  Volume of
+            - mountPath: /var/www/slim_app # mount the volume shared by two containers
+              name: nginx-www
+            - mountPath: /etc/nginx/nginx.conf #Mount configuration nginx.conf  Volume of
+              subPath: nginx.conf
+              name: nginx-config
+            - name: vol1
+              mountPath: /var/www/slim_app/data
+            - name: vol2
+              mountPath: /var/www/slim_app/data2
+      volumes:
+        - name: nginx-www # this volume is shared by PHP FPM container and nginx container, both of which are volumemounts
+          emptyDir: {}
+        - name: nginx-config
+          configMap: #some people wonder why configmap objects can be injected into containers through volumemounts, because configmap is a special kind of volume in essence
+            name: nginx-config
+
+        - name: vol1
+          persistentVolumeClaim:
+            claimName: webupload1-pvc
+        - name: vol2
+          persistentVolumeClaim:
+            claimName: test-volume
+
+---
+apiVersion: v1 # API version
+kind: Service # object type
+metadata:
+  name: php-fpm-nginx
+spec:
+  type: LoadBalancer
+  selector:
+    app: php-fpm-nginx
+  ports:
+    - port: 80
+      targetPort: 80 # service exposes port 80 of nginx container
