@@ -1,16 +1,16 @@
 # Training K8S
 
-## Content
-Day 1: Introduction to Containerization and Kubernetes
+# Table of Contents
 
-Welcome and registration
-Training overview and objectives
+1. [Day 1: Introduction to Containerization and Kubernetes](#day1)
+
 Introduction to containerization and Docker
 Overview of Kubernetes and its benefits
 Kubernetes architecture and components (e.g., Nodes, Pods, Services)
 Setting up a Kubernetes environment (e.g., Minikube, kubeadm, or managed services like Google Kubernetes Engine)
 Hands-on exercises for basic Docker and Kubernetes usage
-Day 2: Kubernetes Objects and Workloads
+
+2. [Day 2: Kubernetes Objects and Workloads](#day2)
 
 Kubernetes objects and resources (e.g., Deployments, ReplicaSets, StatefulSets)
 Services, Ingress, and Load Balancing
